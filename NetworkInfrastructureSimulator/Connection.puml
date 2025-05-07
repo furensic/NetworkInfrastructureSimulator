@@ -1,0 +1,49 @@
+﻿@startuml
+class Connection {
+Participants : ConnectionParticipant[]
+
+void EstablishConnection()
+void InterruptConnection()
+}
+
+class ConnectionParticipant{
+Uid : Uid
+CreatedTime : DateTime
+
+}
+
+class EthernetConnection{
+
+}
+
+class WiredEthernetConnection{}
+
+class WirelessEthernetConnection{}
+
+class EthernetCable{
+Type : EthernetCableType
+}
+
+class EthernetCableType {
+Bandwidth : int
+TypeNumber : int
+Duplex : bool
+}
+
+class Switch {
+Ports : SwitchPort[]
+}
+
+class SwitchPort {
+ConnectedCable : EthernetCable
+}
+
+EthernetConnection --> Connection
+WiredEthernetConnection --> EthernetConnection
+WirelessEthernetConnection --> EthernetConnection
+EthernetCable --> WiredEthernetConnection
+Connection *-- ConnectionParticipant : used by
+EthernetCable *-- EthernetCableType
+SwitchPort *-- Switch
+SwitchPort --* EthernetCable
+@enduml
