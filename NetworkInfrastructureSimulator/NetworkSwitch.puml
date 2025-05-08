@@ -1,0 +1,94 @@
+﻿@startuml
+!theme reddress-darkred
+'https://plantuml.com/class-diagram
+
+interface INetworkSwitch{
++string : SwitchName
++Guid : SwitchId
++string : ModelName
++string : SerialNumber
++string : Manufacturer
++int : PortCount
++List<NetworkSwitchPort> : Ports
+
++SwitchFormFactor : FormFactor
++SwitchPowerSupply : PowerSupply
++SwitchMacAddressTable : MacAddressTable
++SwitchingCapacity : SwitchingCapacity
++SwitchLatency : AverageLatency
+
++void : Initialize()
++void : AddSwitchPort(NetworkSwitchPort)
++void : RemoveSwitchPort(NetworkSwitchPort)
+}
+interface INetworkSwitchManaged
+interface INetworkSwitchUnmanaged
+interface INetworkSwitchPoe
+interface INetworkSwitchSan
+class NetworkSwitchIpSan
+class NetworkSwitchFibreChannel
+
+INetworkSwitchSan -- NetworkSwitchIpSan
+
+class NetworkSwitchLayer3{
++List<SwitchVlans> : Vlans
+}
+class NetworkSwitchLayer2
+class NetworkSwitchMultiLayer
+
+class NetworkSwitchPort{
++Guid : Id
++PortLinkState : LinkState 
++PortType : Type
++PortLedStatus : LedStatus
++PortEthernetSpeed : EthernetSpeed
++PortDuplexMode : DuplexMode
+
++void : Connect(PhysicalConnection)
+}
+
+enum PortType{
+RJ45
+SFP
+SFPPlus
+QSFP
+}
+
+enum SwitchFormFactor{
+RackMounted
+Desktop
+WallMounted
+}
+
+enum EthernetSpeedEnum{
+Speed10M
+Speed100M
+Speed1G
+Speed10G
+Speed25G
+Speed40G
+Speed100G
+}
+
+enum PoeStandardEnum{
+IEEE802_3af
+IEEE802_3at
+IEEE802_3bt_Type3
+IEEE802_3bt_Type4
+}
+
+enum RoutingProtocolTypeEnum{
+Static
+RIP
+OSPF
+EIGRP
+BGP
+}
+
+INetworkSwitch -- NetworkSwitchLayer2
+INetworkSwitch -- NetworkSwitchLayer3
+INetworkSwitch -- NetworkSwitchMultiLayer
+INetworkSwitch *-- NetworkSwitchPort
+INetworkSwitch *-- SwitchFormFactor
+NetworkSwitchPort *-- PortType
+@enduml

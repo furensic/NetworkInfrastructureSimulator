@@ -1,49 +1,34 @@
 ﻿@startuml
-class Connection {
-Participants : ConnectionParticipant[]
+interface IConnection{
+void EnableConnection()
+void DisableConnection()
+}
 
-void EstablishConnection()
-void InterruptConnection()
+abstract class Connection{
+Guid : ConnectionId
+List<ConnectionParticipant> : ConnectionParticipants
+bool : IsEnabled
+
+void EnableConnection()
+void DisableConnection()
+ConnectionParticipant AddParticipant()
+void RemoveParticipant(ConnectionParticipant)
+void ShowParticipants()
+}
+
+class PhysicalConnection{
+void WriteBuffer(ConnectionParticipant)
 }
 
 class ConnectionParticipant{
-Uid : Uid
-CreatedTime : DateTime
+Guid : ConnectionParticipantId
+string : Buffer
 
+void WriteBuffer(string)
+void ReadBuffer()
 }
 
-class EthernetConnection{
-
-}
-
-class WiredEthernetConnection{}
-
-class WirelessEthernetConnection{}
-
-class EthernetCable{
-Type : EthernetCableType
-}
-
-class EthernetCableType {
-Bandwidth : int
-TypeNumber : int
-Duplex : bool
-}
-
-class Switch {
-Ports : SwitchPort[]
-}
-
-class SwitchPort {
-ConnectedCable : EthernetCable
-}
-
-EthernetConnection --> Connection
-WiredEthernetConnection --> EthernetConnection
-WirelessEthernetConnection --> EthernetConnection
-EthernetCable --> WiredEthernetConnection
-Connection *-- ConnectionParticipant : used by
-EthernetCable *-- EthernetCableType
-SwitchPort *-- Switch
-SwitchPort --* EthernetCable
+IConnection -- Connection
+Connection -- PhysicalConnection
+Connection *-- ConnectionParticipant
 @enduml

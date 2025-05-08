@@ -53,6 +53,10 @@ public abstract class Connection : IConnection {
             i++;
         }
     }
+
+    public Connection() {
+        Console.WriteLine("Creating new connection");
+    }
 }
 
 public class PhysicalConnection : Connection {
