@@ -72,7 +72,7 @@ public class PhysicalConnection : Connection {
 public class ConnectionParticipant(Guid guid) {
     public Guid ConnectionParticipantId { get; set; } = guid;
 
-    public string Buffer;
+    public string Buffer = string.Empty;
 
     public void WriteBuffer(string buffer) {
         this.Buffer = buffer;
